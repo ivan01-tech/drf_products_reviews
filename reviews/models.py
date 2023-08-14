@@ -12,6 +12,9 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = "Categories"
+
 
 class Product(models.Model):
     name = models.CharField(max_length=255)
@@ -22,6 +25,9 @@ class Product(models.Model):
 
     class Meta:
         ordering = ["-created"]
+
+    def __str__(self):
+        return self.name
 
 
 class Comment(models.Model):
@@ -53,8 +59,11 @@ class Company(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = "Companies"
 
-class ProductSize:
+
+class ProductSize(models.Model):
     name = models.TextField(max_length=255)
 
     def __str__(self):
@@ -69,7 +78,7 @@ class ProductsSite(models.Model):
     company = models.ForeignKey(
         to=Company, on_delete=models.CASCADE, related_name="sites"
     )
-    price = models.DecimalField(default=7.2)
+    price = models.DecimalField(decimal_places=4, max_digits=10)
     url = models.URLField()
     productsize = models.ForeignKey(
         to=ProductSize, on_delete=models.CASCADE, related_name="sites"

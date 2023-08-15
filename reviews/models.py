@@ -49,7 +49,7 @@ class Comment(models.Model):
     updated = models.DateField()
 
     def __str__(self):
-        return self.name
+        return self.title
 
 
 class Company(models.Model):
@@ -64,7 +64,7 @@ class Company(models.Model):
 
 
 class ProductSize(models.Model):
-    name = models.TextField(max_length=255)
+    name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name

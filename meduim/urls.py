@@ -7,9 +7,7 @@ from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("reviews.urls")),
-    path("token/", TokenObtainPairView.as_view(), name="token"),
-    path("refresh/", TokenRefreshView.as_view(), name="refresh"),
-    # path("verify/", TokenObtainPairView.as_view(), name="verify"),
+    path("auth/", include("auth.urls")),
 ]
 
 # to serve static files

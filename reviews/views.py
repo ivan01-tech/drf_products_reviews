@@ -2,11 +2,15 @@ from rest_framework import viewsets
 from reviews.models import Product
 from reviews.serializers import ProductSerializer
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework_simplejwt.views import TokenObtainPairView
+from .serializers import MyTokenObtainPairSerailizer
+
+
 
 
 class ProductViewSet(viewsets.ReadOnlyModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated,]
 
     queryset = Product.objects.all()
     serializer_class = ProductSerializer

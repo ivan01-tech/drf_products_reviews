@@ -7,6 +7,10 @@ class User(User):
     name = models.CharField(max_length=255)
 
 
+class MyTokenPairSerializers:
+    pass
+
+
 class Category(models.Model):
     name = models.CharField(max_length=255)
 
@@ -23,7 +27,11 @@ class Product(models.Model):
     updated = models.DateTimeField(auto_now=True)
     content = models.TextField()
     category = models.ManyToManyField(Category, related_name="products")
-    image = models.ManyToManyField("reviews.ImageModel",related_name="products",)
+    image = models.ManyToManyField(
+        "reviews.ImageModel",
+        related_name="products",
+    )
+
     class Meta:
         ordering = ["-created"]
 

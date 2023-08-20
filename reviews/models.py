@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from versatileimagefield.fields import VersatileImageField, PPOIField
 
 
 class User(User):
@@ -22,7 +23,7 @@ class Product(models.Model):
     updated = models.DateTimeField(auto_now=True)
     content = models.TextField()
     category = models.ManyToManyField(Category, related_name="products")
-
+    image = models.ManyToManyField("reviews.ImageModel",related_name="products",)
     class Meta:
         ordering = ["-created"]
 
@@ -87,4 +88,15 @@ class ProductsSite(models.Model):
     update = models.DateField(auto_now_add=True)
 
     def __str__(self):
+        return self.name
+
+
+class ImageModel(models.Model):
+    name = models.CharField(
+        max_length=20,
+    )
+    image = VersatileImageField("Image", upload_to="images/", ppoi_field="image_ppoi")
+    image_ppoi = PPOIField()
+
+    def __str__(self) -> str:
         return self.name

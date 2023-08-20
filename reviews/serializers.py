@@ -1,8 +1,9 @@
 from rest_framework import serializers
-from reviews.models import Category, Comment, Company, Product, ProductSize
+from reviews.models import Category, Comment, Company, ImageModel, Product, ProductSize
 from django.contrib.auth.models import User
 from django.utils.timezone import now
 from rest_flex_fields import FlexFieldsModelSerializer
+from versatileimagefield.serializers import VersatileImageFieldSerializer
 
 
 class UserSerializer(FlexFieldsModelSerializer):
@@ -86,6 +87,7 @@ class ProductSerializer(FlexFieldsModelSerializer):
             "category": ("reviews.CategorySerializer", {"many": True}),
             "sites": ("reviews.ProductSiteSerializer", {"many": True}),
             "comments": ("reviews.CommentSerializer", {"many": True}),
+            "image": ("reviews.ImageSerializer", {"many": True}),
         }
         permit_list_expands = [
             "category",
@@ -94,3 +96,16 @@ class ProductSerializer(FlexFieldsModelSerializer):
             "sites.company",
             "sites.productsize",
         ]
+
+
+class ImageSerializer(FlexFieldsModelSerializer):
+    image = VersatileImageFieldSerializer(
+        sizes=[
+            ("full_size", "url"),
+            ("thumbnail", "thumbnail__100x100"),
+        ]
+    )
+
+    class Meta:
+        model = ImageModel
+        fields = ["pk", "name", "image"]
